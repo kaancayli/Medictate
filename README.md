@@ -1,5 +1,7 @@
 # Medictate (Final Project for CS50W: Web Programming with Python and JavaScript)
 
+[Course Certificate](https://cs50.harvard.edu/certificates/aab7e662-7767-4776-a774-cd3561c4df8e)
+
 [Course website](https://cs50.harvard.edu/web/2020/)
 
 [Final Project Requirements](https://cs50.harvard.edu/web/2020/projects/final/capstone/)
