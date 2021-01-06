@@ -1,0 +1,258 @@
+.hiddenRow {
+    padding: 0 !important;
+}
+
+textarea {
+    min-height: 400px;
+}
+
+td {
+    text-align: center; /* center checkbox horizontally */
+    vertical-align: middle; /* center checkbox vertically */
+    border: none;
+}
+
+input[type="checkbox"] {
+    transform: scale(1.5);
+}
+
+button[id="editButton"] {
+    font-size: 20px;
+    background-color: #f06a61;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px rgb(124, 124, 124);
+    color: white;
+    padding: 7px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+button[id="editButton"]:hover {
+    background-color: red}
+
+button[id="editButton"]:active {
+  background-color: rgb(255, 109, 109);
+  box-shadow: 0 1px rgb(138, 138, 138);
+  transform: translateY(4px);
+}
+button[id="editButton"]:focus{
+    outline: none;
+}
+button[id="editButton"]:disabled{
+    background-color: lightgray;
+}
+.controls {
+    display: flex;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    max-width: 24em;
+}
+
+[contenteditable='true'] {
+    outline: 1px solid;
+}
+[contenteditable='true']:focus {
+    outline: 1.5px solid;
+    outline-color: royalblue;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+  
+.recordButton, .stopButton, .pauseButton {
+flex-grow: 1;
+height: 3.5rem;
+min-width: 2rem;
+border: none;
+border-radius: 0.15rem;
+background: #ed341d;
+margin-left: 2px;
+box-shadow: inset 0 -0.15rem 0 rgba(0, 0, 0, 0.2);
+cursor: pointer;
+display: flex;
+justify-content: center;
+align-items: center;
+color:#ffffff;
+font-weight: bold;
+font-size: 1.5rem;
+}
+
+/* CSS From https://blog.addpipe.com/using-recorder-js-to-capture-wav-audio-in-your-html5-web-site/ */
+.recordButton:hover, .recordButton:focus, .stopButton:hover, .stopButton:focus, .pauseButton:hover, .pauseButton:focus {
+    outline: none;
+    background: #c72d1c;
+}
+
+.recordButton::-moz-focus-inner,  .stopButton::-moz-focus-inner, .pauseButton::-moz-focus-inner{
+    border: 0;
+}
+
+.recordButton:active, .stopButton:active, .pauseButton:active {
+    box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.2);
+    line-height: 3rem;
+}
+
+.recordButton:disabled, .stopButton:disabled, .pauseButton:disabled {
+    pointer-events: none;
+    background: lightgray;
+}
+.recordButton:first-child, .stopButton:first-child, .pauseButton:first-child {
+    margin-left: 0;
+}
+
+audio {
+    display: block;
+    width: 75%;
+    margin-bottom: 1rem;
+
+}
+
+.record {
+    margin-top: 0.5rem;
+    font-size: 80%;
+}
+
+.recordingsList{
+	max-width: 28em;
+}
+
+.message-header {
+    transition: box-shadow .3s;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    color: black;
+}
+
+.message-header:hover {
+    box-shadow: 0 0 11px rgba(33,33,33,.2); 
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+.message-header div.date {
+    float: right;
+}
+.message-header div.sender {
+    float: left;
+    font-weight: bold;
+}
+.message-header div.subject {
+    float: left;
+    padding-left: 20px;
+}
+.message-box a {
+    color: black;
+}
+body {
+  font-size: .875rem;
+}
+
+.feather {
+  width: 16px;
+  height: 16px;
+  vertical-align: text-bottom;
+}
+
+/*
+* CSS From https://getbootstrap.com/docs/4.0/examples/dashboard/
+*/
+
+
+/*
+ * Sidebar
+ */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100; /* Behind the navbar */
+  padding: 0;
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+.sidebar-sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 48px; /* Height of navbar */
+  height: calc(100vh - 48px);
+  padding-top: .5rem;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+.sidebar .nav-link {
+  font-weight: 500;
+  color: #333;
+}
+
+.sidebar .nav-link .feather {
+  margin-right: 4px;
+  color: #999;
+}
+
+.sidebar .nav-link.active {
+  color: #007bff;
+}
+
+.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.active .feather {
+  color: inherit;
+}
+
+.sidebar-heading {
+  font-size: .75rem;
+  text-transform: uppercase;
+}
+
+/*
+ * Navbar
+ */
+.navbar-nav {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  font-size: 1rem;
+}
+.navbar-brand {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  font-size: 1rem;
+  background-color: rgba(0, 0, 0, .25);
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+}
+
+.navbar .form-control {
+  padding: .75rem 1rem;
+  border-width: 0;
+  border-radius: 0;
+}
+
+.form-control-dark {
+  color: #fff;
+  background-color: rgba(255, 255, 255, .1);
+  border-color: rgba(255, 255, 255, .1);
+}
+
+.form-control-dark:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+
+/*
+ * Utilities
+ */
+
+.border-top { border-top: 1px solid #e5e5e5; }
+.border-bottom { border-bottom: 1px solid #e5e5e5; }

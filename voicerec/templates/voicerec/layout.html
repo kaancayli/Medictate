@@ -1,0 +1,147 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+    <title>Medictate</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'voicerec/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    {% block script %}
+    {% endblock %}
+</head>
+
+<body>
+    <!-- Bootstrap NavBar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+            <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Medictate</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto p-0">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item text-nowrap px-1">
+                        <a class="nav-link" href="#"> <span style="color: white;"> Signed in as: <span
+                                    style="font-weight: bold;"> {{request.user}}</span></a>
+                    </li>
+                    <li class="nav-item text-nowrap px-1">
+                        <a class="nav-link" href="{% url 'index' %}">Main</a>
+                    </li>
+                    <li class="nav-item dropdown text-nowrap px-1">
+                        <div class="dropdown">
+                            <a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Rooms
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" id='room-menu-small'></div>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown text-nowrap px-1">
+                        <div class="dropdown">
+                            <a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Message Util
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" onClick="load_messages()" href="#"> Messagebox </a>
+                                    <a class="dropdown-item" onClick="compose_message()" href="#">Compose Message</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item text-nowrap px-1">
+                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item text-nowrap px-1">
+                        <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                    </li>
+                    <li class="nav-item text-nowrap px-1">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        {% if request.user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" id="profile-button">
+                                    <div class="d-flex w-100 justify-content-start align-items-center">
+                                        <span data-feather="home"></span>
+                                        <span class="menu-collapsed"> Main </span>
+                                    </div>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'login' %}">
+                                    <div class="d-flex w-100 justify-content-start align-items-center">
+                                        <span data-feather="log-in"></span>
+                                        <span > Login </span>
+                                    </div>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                {% if user.is_authenticated %}
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Create room</span>
+                        <a class="nav-link" href="#" onClick='return false;' id='create-room-button'>
+                            <span data-feather="plus-circle"></span>
+                        </a>
+                    </h6>
+                    <ul class="nav flex-column" id='room-menu'></ul>
+
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Message Util</span>
+                    </h6>
+                    <ul class="nav flex-column" >
+                        <li class="nav-item"> 
+                            <a class="nav-link" href="#" id="message-button" onClick="return false;">
+                                <span data-feather="mail"></span>
+                                Messagebox
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="message-compose-menu" onClick="return false;">
+                                <span data-feather="send"></span>
+                                Compose Message
+                            </a>
+                        </li>
+                    </ul>
+
+                {% endif %}
+            </nav> 
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                    {% block body %}
+                    {% endblock %}
+        </div>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+<script>
+    feather.replace()
+</script>
+</html>

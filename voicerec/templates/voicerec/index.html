@@ -1,0 +1,153 @@
+{% extends "voicerec/layout.html" %}
+{% load static %}
+
+{% block body %}
+        <h1 id=title></h1>
+        <div id="profile-view">
+          <div class="row">
+            <div class="col-xl-6 col-sm-6 mb-3">
+              <div class="card text-white d-flex flex-column bd-highlight bg-primary">
+                <div class="card-body">
+                  <div class="card-body-icon">
+                    <i class="fa fa-fw fa-comments"></i>
+                  </div>
+                  <div class="mr-5" id="message_count"></div>
+                </div>
+                <a class="card-footer text-white clearfix small z-1" href="#" id="messages_view_details">
+                  <span class="float-left">View Details</span>
+                  <span class="float-right">
+                    <i class="fa fa-angle-right"></i>
+                  </span>
+                </a>
+              </div>
+            </div>
+            <div class="col-xl-6 col-sm-6 mb-3">
+              <div class="card text-white d-flex flex-column bd-highlight bg-warning">
+                <div class="card-body">
+                  <div class="card-body-icon">
+                    <i class="fa fa-fw fa-list"></i>
+                  </div>
+                  <div class="mr-5" id="case_count"></div>
+                </div>
+                <a class="card-footer text-white clearfix small z-1" href="#"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <form id="patient-form">
+          {% csrf_token %}
+          <div class="form-row align-items-center">
+            <div class="form-group col-auto">
+              Name: <input class="form-control" id="patient-name">
+            </div>
+            <div class="form-group col-auto">
+              Surname: <input class="form-control" id="patient-surname">
+            </div>
+            <div class="form-group col-auto">
+              Prediagnosis: <input class="form-control" id="prediagnosis">
+            </div>
+          </div>
+          <div class="form-row align-items-center">
+            <div class="form-group col-auto">
+              <button id="case-submit" class="btn btn-success float-right">Submit</button>
+            </div>
+          </div>
+          <hr>
+        </form>
+        <div class="card" id="table">
+          <div class="card-header">
+            <i class="fa fa-table" id="room-title"></i>
+            Cases to be recorded
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover" id="dataTableActive" width="100%" cellspacing="0">
+                <thead class="thead-dark" id="patient-table-head">
+                  <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Prediagnosis</th>
+                    <th>Created By</th>
+                    <th>Date</th>
+                    <th>Recorded</th>
+                    <th>Edit</th>
+                  </tr>
+                </thead>
+                <tbody id="patient-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="card" id="table-closed">
+          <div class="card-header">
+            <i class="fa fa-table"></i>
+            Recorded Cases
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover" id="dataTableClosed" width="100%" cellspacing="0">
+                <thead class="thead-dark" id="patient-table-head-closed">
+                  <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Prediagnosis</th>
+                    <th>Created By</th>
+                    <th>Date</th>
+                    <th>Recorded</th>
+                    <th>Edit</th>
+                  </tr>
+                </thead>
+                <tbody id="patient-table-body-closed"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div id="create-room">
+          {% csrf_token %}
+          <div class="form-row align-items-center">
+            <div class="form-group col-auto">
+              Owner: <input class="form-control" type="text" placeholder={{request.user}} readonly>
+            </div>
+            <div class="form-group col-auto">
+              Room name: <input class="form-control" id="room-name">
+            </div>
+            <div class="form-group col-auto">
+              Participants: <input id="participants" class="form-control">
+            </div>
+          </div>
+          <div class="form-row align-items-center">
+            <div class="form-group col-auto">
+              <button type="submit" id="room-submit" class="btn btn-success float-right">Submit</button>
+            </div>
+          </div>
+        </div>
+        <div id="messages-view">
+
+        </div>
+        <div id="message">
+
+        </div>
+        <div id="compose-view">
+          {% csrf_token %}
+          <h3>New Message</h3>
+          <form id="compose-form">
+            <div class="form-group">
+              From: <input disabled class="form-control" value="{{ request.user}}">
+            </div>
+            <div class="form-group">
+              Subject: <input class="form-control" id="compose-subject" placeholder="Subject">
+            </div>
+            <div class="form-group">
+              To: <input id="compose-recipients" class="form-control">
+            </div>
+            <textarea class="form-control" id="compose-body" placeholder="Body"></textarea>
+            <input id="message-send" type="submit" class="btn btn-primary" />
+          </form>
+        </div>
+{% endblock %}
+
+{% block script %}
+<script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
+<script src="{% static 'voicerec/app.js' %}"></script>
+<script src="{% static 'voicerec/index.js'%}"></script>
+{% endblock %}
